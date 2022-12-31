@@ -6,6 +6,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  useToast,
 } from "@chakra-ui/react";
 import { useAtom } from "jotai";
 import { useRouter } from "next/router";
@@ -22,20 +23,36 @@ function LoginForm({
   const [show, setShow] = useState(false);
   const router = useRouter();
   const handleClick = () => setShow(!show);
-
+  const toast = useToast();
+  const ToastId = "test-toast";
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
     const target = event.target as typeof event.target & {
       login: { value: string };
       password: { value: string };
     };
-    if (target.login.value === "123" && target.password.value === "123") {
+    if (
+      target.login.value === credentials.login &&
+      target.password.value === credentials.password
+    ) {
+      // for later use
+      //credentials.login && credentials.password
       // authenticate user
       setLoginState({ ...loginState, authenticated: true });
 
       void router.replace("/user-selection");
     } else {
-      alert("Wrong password!");
+      if (!toast.isActive(ToastId)) {
+        toast({
+          id: ToastId,
+          title: "Złe dane logowania.",
+          description: "Użyłeś złego hasła lub loginu. Spróbuj ponownie.",
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+          position: "bottom-right",
+        });
+      }
     }
   };
 
@@ -61,7 +78,7 @@ function LoginForm({
               color: "white",
               fontSize: "19px",
               fontStyle: "italic",
-              _groupHover: { color: "#9D9D9D" },
+              _groupHover: { color: "#de1556" },
             }}
             border="4px"
             borderRadius="2xl"
@@ -90,7 +107,7 @@ function LoginForm({
               color: "white",
               fontSize: "19px",
               fontStyle: "italic",
-              _groupHover: { color: "#9D9D9D" },
+              _groupHover: { color: "#de1556" },
             }}
             borderRadius="2xl"
             focusBorderColor="white"
@@ -114,7 +131,7 @@ function LoginForm({
         <Button
           w="50px"
           h="50px"
-          color="#5AC072"
+          color="#f8dd8a"
           background="#2d2e2d"
           borderRadius="full"
           fontWeight="700"
@@ -123,9 +140,9 @@ function LoginForm({
           letterSpacing="13px"
           fontSize="22px"
           border="4px"
-          borderColor="#5AC072"
+          borderColor="#f8dd8a"
           _hover={{
-            background: "#5AC072",
+            background: "#de1556",
             color: "white",
             borderColor: "white",
           }}

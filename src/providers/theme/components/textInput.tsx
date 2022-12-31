@@ -5,22 +5,22 @@ import type { PartsStyleFunction } from "@chakra-ui/theme-tools";
 const variantOutline: PartsStyleFunction<typeof parts> = () => {
   return {
     field: {
-      borderColor: "#9A9CCE",
+      borderColor: "#de1556",
       borderRadius: "4px",
-      color: "#9A9CCE",
+      color: "#de1556",
       padding: "12px",
       placeholder: "text here",
       _placeholder: {
         fontWeight: "400",
-        color: "#9A9CCE",
+        color: "#de1556",
         fontSize: "18px",
       },
 
       _hover: {
-        borderColor: "#190F69",
+        borderColor: "#de1556",
         color: "black",
         _placeholder: {
-          color: "#190F69",
+          color: "#de1556",
         },
       },
       _readOnly: {
@@ -57,11 +57,11 @@ const variantOutline: PartsStyleFunction<typeof parts> = () => {
       },
       _focusVisible: {
         zIndex: 1,
-        borderColor: "#190F69",
-        boxShadow: `0 0 0 0px #190F69`,
-        color: "#190F69",
+        borderColor: "#de1556",
+        boxShadow: `0 0 0 0px #de1556`,
+        color: "white",
         _placeholder: {
-          color: "#190F69",
+          color: "#de1556",
         },
       },
     },

@@ -29,10 +29,7 @@ function LoginForm({
       login: { value: string };
       password: { value: string };
     };
-    if (
-      target.login.value === credentials.login &&
-      target.password.value === credentials.password
-    ) {
+    if (target.login.value === "123" && target.password.value === "123") {
       // authenticate user
       setLoginState({ ...loginState, authenticated: true });
 

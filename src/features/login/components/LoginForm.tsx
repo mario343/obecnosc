@@ -68,7 +68,7 @@ function LoginForm({
             placeholder="LOGIN"
             _groupHover={{
               background: "white",
-              color: "#2d2e2d",
+              color: "#de1556",
             }}
             _placeholder={{
               fontWeight: "850",

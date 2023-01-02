@@ -1,10 +1,9 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Divider, Flex, Stack, Text } from "@chakra-ui/react";
 import type { NextPage } from "next";
 
 import type { User } from "@/types/user";
 import { getDatabase } from "@/utilities/notion";
 
-import { Header } from "../features/userSelection/components/Header";
 import { UserTile } from "../features/userSelection/components/UserTile";
 import { usersDatabaseId } from ".";
 
@@ -25,24 +24,14 @@ export const getStaticProps = async () => {
 
 const UserSelection: NextPage<{ users: User[] }> = ({ users }) => {
   return (
-    <Flex h="100vh" direction="column" align="center" px={[50, 100, 150]}>
-      <Header />
-      <Flex
-        color="white"
-        w="100%"
-        direction="column"
-        align="center"
-        mb={[10, 5]}
-      >
-        <Text fontSize="4xl">KIM JESTEŚ?</Text>
-      </Flex>
-      <Flex
-        w="100%"
-        h={[500, 500, 600]}
-        justify="center"
-        align="center"
-        flexWrap="wrap"
-      >
+    <Stack h="100vh" align="center" justify="center" spacing={40}>
+      <Stack h="120px" w="90%" spacing={10} pt="20px">
+        <Divider color="#e2265c" border="5px" borderRadius="full" />
+        <Text fontSize="60px" alignSelf="center">
+          KIM JESTEŚ?
+        </Text>
+      </Stack>
+      <Flex w="100%" justify="center" align="center" flexWrap="wrap">
         {users.map((user, index) => (
           <UserTile
             key={index}
@@ -52,7 +41,7 @@ const UserSelection: NextPage<{ users: User[] }> = ({ users }) => {
           />
         ))}
       </Flex>
-    </Flex>
+    </Stack>
   );
 };
 

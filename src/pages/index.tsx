@@ -1,4 +1,4 @@
-import { Flex, Text, Stack } from "@chakra-ui/react";
+import { Flex, Stack, Text } from "@chakra-ui/react";
 import type { NextPage } from "next";
 
 import { getCredentials } from "@/features/login/components/utilities/getCredentials";
@@ -10,7 +10,8 @@ export const usersDatabaseId = "6f6713ff0a044c0485bccaabb03c2349";
 //process.env.NOTION_USERS_DATABASE_ID as string;
 
 export const credentialsDatabaseId = "99724a9083a14e22bc8a4986d9351e6a";
-const dupa = process.env.NOTION_USERS_DATABASE_ID as string;
+// const dupa = process.env.;
+// NOTION_USERS_DATABASE_ID as string;
 //export const mondayScheduleDatabaseId = process.env.PASSWORD_DATABASE_ID as string;
 
 export const getStaticProps = async () => {
@@ -29,7 +30,6 @@ export const getStaticProps = async () => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Home: NextPage<{ credentials: any }> = ({ credentials }) => {
-  console.log(dupa);
   const { login, password } = getCredentials(credentials);
   return (
     <Stack

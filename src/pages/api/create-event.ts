@@ -56,26 +56,26 @@ const createEventHandler = async (
             },
           ],
         },
-        [startPropId]: {
-          type: "date",
-          date: {
-            start: request.body.selectedDay,
-          },
-        },
+        // [startPropId]: {
+        //   type: "date",
+        //   date: {
+        //     start: request.body.selectedDay,
+        //   },
+        // },
 
-        [stopPropId]: {
-          type: "date",
-          date: {
-            start: request.body.selectedDay,
-          },
-        },
-        [availabilityPropId]: {
-          type: "select",
-          select: {
-            name: "Available",
-            color: "blue",
-          },
-        },
+        // [stopPropId]: {
+        //   type: "date",
+        //   date: {
+        //     start: request.body.selectedDay,
+        //   },
+        // },
+        // [availabilityPropId]: {
+        //   type: "select",
+        //   select: {
+        //     name: "Available",
+        //     color: "blue",
+        //   },
+        // },
 
         // "Related to Users (Property)": {
         //   type: "relation",

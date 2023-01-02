@@ -23,27 +23,27 @@ const UserTile = ({ name }: UserItemProps) => {
     <Flex
       mr={[25, 35]}
       flexDirection={["row", "column"]}
-      w={[85, 150, 200]}
-      h={[115, 155, 265]}
+      w="200px"
+      h="265px"
       justify="space-between"
       role="group"
       flexWrap={["wrap", "nowrap"]}
     >
       <Button
         bg="#c4c4c4"
-        w={[85, 150, 200]}
-        h={[85, 150, 200]}
+        w="200px"
+        h="200px"
         borderRadius="xl"
         mb="5px"
-        _groupHover={{ bg: "#5AC072" }}
+        _groupHover={{ bg: "#fee886" }}
         onClick={handleClick}
       />
       <Flex w="100%" align="center" justify="center" h={[30, 50]}>
         <Text
-          fontSize={["md", "3xl"]}
+          fontSize="3xl"
           color="white"
           textTransform="uppercase"
-          _groupHover={{ color: "#5AC072" }}
+          _groupHover={{ color: "#fee886" }}
         >
           {name}
         </Text>

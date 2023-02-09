@@ -1,4 +1,4 @@
-import { Divider, Flex, Stack, Text } from "@chakra-ui/react";
+import { Divider, Flex, Text, VStack } from "@chakra-ui/react";
 import type { NextPage } from "next";
 
 import type { User } from "@/types/user";
@@ -24,13 +24,11 @@ export const getStaticProps = async () => {
 
 const UserSelection: NextPage<{ users: User[] }> = ({ users }) => {
   return (
-    <Stack h="100vh" align="center" justify="center" spacing={40}>
-      <Stack h="120px" w="90%" spacing={10} pt="20px">
+    <VStack h="100vh" align="center" justify="center" spacing="100px">
+      <VStack w="90%" alignSelf="center">
         <Divider color="#e2265c" border="5px" borderRadius="full" />
-        <Text fontSize="60px" alignSelf="center">
-          KIM JESTEŚ?
-        </Text>
-      </Stack>
+        <Text fontSize="60px">KIM JESTEŚ?</Text>
+      </VStack>
       <Flex w="100%" justify="center" align="center" flexWrap="wrap">
         {users.map((user, index) => (
           <UserTile
@@ -41,7 +39,7 @@ const UserSelection: NextPage<{ users: User[] }> = ({ users }) => {
           />
         ))}
       </Flex>
-    </Stack>
+    </VStack>
   );
 };
 

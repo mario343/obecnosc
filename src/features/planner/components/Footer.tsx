@@ -58,7 +58,9 @@ const BottomSection = ({ selectedWeek, dispatch }: BottomSectionProps) => {
           ⟶
         </Button>
       </Flex>
-      <Button variant="black">ZAPISZ</Button>
+      <Button variant="black" visibility="hidden">
+        ZAPISZ
+      </Button>
     </Flex>
   );
 };

@@ -14,8 +14,8 @@ interface WeekViewProps {
 
 const DayItem = ({ day }: { day: Date }) => {
   const [selectedDay, setSelectedDay] = useAtom(selectedDayAtom);
-  // const hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
-  // const hourHeight = DAY_ITEM_HEIGHT / (hours.length - 1);
+  const hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
+  const hourHeight = (DAY_ITEM_HEIGHT - 1) / hours.length;
 
   return (
     <VStack w="100%" mx={20} px={1}>
@@ -29,25 +29,27 @@ const DayItem = ({ day }: { day: Date }) => {
         height={DAY_ITEM_HEIGHT}
         w="100%"
         borderRadius={8}
-        borderWidth={isSameDay(day, selectedDay) ? 2 : 0}
-        borderColor={isSameDay(day, selectedDay) ? "yellow.300" : "gray.200"}
+        borderWidth={isSameDay(day, selectedDay) ? 5 : 0}
+        borderColor={isSameDay(day, selectedDay) ? "yellow.300" : "gray.300"}
         position="relative"
         _hover={{ shadow: "2xl", bg: "#b5b5b5" }}
         onClick={() => setSelectedDay(day)}
       >
-        {/* {hours.map((hour, index) => (
+        {hours.map((hour, index) => (
           <Box
             width="100%"
+            //     bg="red"
             left={0}
             height={hourHeight}
-            borderWidth={1}
+            //  borderWidth={1}
+            color="black"
             key={hour}
             position="absolute"
             top={index * hourHeight}
           >
             <Text key={hour}>{hour}:00</Text>
-          </Box> 
-        ))} */}
+          </Box>
+        ))}
       </Box>
     </VStack>
   );

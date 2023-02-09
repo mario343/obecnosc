@@ -1,4 +1,4 @@
-import { Avatar, Button, Flex } from "@chakra-ui/react";
+import { Avatar, Button, Flex, Tooltip } from "@chakra-ui/react";
 import { useAtom } from "jotai";
 import { RESET } from "jotai/utils";
 import { useRouter } from "next/router";
@@ -30,22 +30,28 @@ const Header = () => {
           MÓJ PLAN
         </Button>
 
-        <Button variant="black" ml="10px">
+        <Button variant="black" ml="10px" visibility="hidden">
           ZESPÓŁ
         </Button>
       </Flex>
 
       <Flex w={[175]}>
-        <Avatar
-          mr="10px"
-          w="40px"
-          h="40px"
-          name={loginState?.name ?? "Niewiadomo"}
-          color="white"
-          border="2px"
-          bg="gray"
-        />
-
+        <Tooltip
+          label={loginState?.name}
+          bg="white"
+          color="black"
+          placement="top"
+        >
+          <Avatar
+            mr="10px"
+            w="40px"
+            h="40px"
+            name={loginState?.name ?? "Niewiadomo"}
+            color="black"
+            border="2px"
+            bg="white"
+          />
+        </Tooltip>
         <Button variant="black" onClick={logout}>
           WYJDŹ
         </Button>

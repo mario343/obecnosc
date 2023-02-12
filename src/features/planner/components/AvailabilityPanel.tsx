@@ -18,21 +18,21 @@ import { selectedDayAtom } from "../atoms/selectedDay";
 
 const iconButtons = [
   {
-    key: "available",
+    key: "AVAILABLE",
     label: "Dostępny",
     variant: "iconButton",
     colorScheme: "green",
     icon: <CheckIcon color="black" />,
   },
   {
-    key: "maybe",
+    key: "MAYBE",
     label: "Może",
     variant: "iconButton",
     colorScheme: "yellow",
     icon: <QuestionIcon color="black" />,
   },
   {
-    key: "unavailable",
+    key: "UNAVAILABLE",
     label: "Niedostępny",
     variant: "iconButton",
     colorScheme: "red",
@@ -44,10 +44,13 @@ const AvailabilityPanel = () => {
   const [selectedDay] = useAtom(selectedDayAtom);
   const [loginState] = useAtom(loginAtom);
   const [state, setState] = useState({
-    hourFrom: 8,
-    hourTo: 22,
+    HOUR_FROM: 8,
+    HOUR_TO: 22,
   });
-
+  const [status, setStatus] = useState({
+    name: "",
+    color: "",
+  });
   const dateOptions = {
     timeZone: "Europe/Zurich",
     month: "numeric",
@@ -68,39 +71,48 @@ const AvailabilityPanel = () => {
     });
   }
   const handleClick = async (name: string) => {
-    if (state.hourFrom < state.hourTo) {
-      const res = await fetch("http://localhost:3000/api/create-event", {
-        method: "POST",
-        body: JSON.stringify({
-          selectedDay: dateAsFormattedString,
+    //  if (state.HOUR_FROM < state.HOUR_TO) {
+    const res = await fetch("http://localhost:3000/api/makecallendar", {
+      method: "POST",
+      body: JSON.stringify({
+        DAY: isoDate,
+        HOUR_FROM: state.HOUR_FROM.toString(),
+        HOUR_TO: state.HOUR_TO.toString(),
 
-          startHour: state.hourFrom,
-          stopHour: state.hourTo,
-
-          loginState,
-          state: {
-            hourFrom: state.hourFrom,
-            hourTo: state.hourTo,
-          },
-        }),
-        headers: {
-          "Content-Type": "application/json",
+        AVAILABILITY: {
+          name: status,
+          color: "red",
         },
-      });
+        USER: loginState?.name,
+        //AVAILABILITY: "AVAILABLE",
+        // HOUR_FROM: state.HOUR_FROM,
+        // HOUR_TO: state.HOUR_TO,
 
-      //const data = await response.json();
-      //this.setState({ postId: data.id });
+        // loginState,
+        // state: {
+        //   HOUR_FROM: state.HOUR_FROM,
+        //   HOUR_TO: state.HOUR_TO,
+        // },
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-      console.log(
-        `${state.hourFrom}:00 - ${
-          state.hourTo
-        }:00 ${selectedDay.toLocaleString()} - ${name.toUpperCase()} - ${
-          loginState.name ?? "niewiadomo"
-        }`
-      );
-    } else {
-      throw new Error("hourFrom > hourTo");
-    }
+    // const data = await response.json();
+    // this.setState({ postId: data.id });
+
+    // console.log(
+    //   `${state.HOUR_FROM}:00 - ${
+    //     state.HOUR_TO
+    //   }:00 ${selectedDay.toLocaleString()} - ${name.toUpperCase()} - ${
+    //     loginState.name ?? "niewiadomo"
+    //   }`
+    //);
+    console.log(res);
+    // } else {
+    //   throw new Error("hourFrom > hourTo");
+    // }
   };
 
   return (
@@ -118,11 +130,11 @@ const AvailabilityPanel = () => {
               borderRadius="xl"
               h="45px"
               bg="white"
-              name="hourFrom"
+              name="HOUR_FROM"
               min={8}
               max={21}
-              value={state.hourFrom}
-              onChange={(value) => handleChange({ name: "hourFrom", value })}
+              value={state.HOUR_FROM}
+              onChange={(value) => handleChange({ name: "HOUR_FROM", value })}
             >
               <NumberInputField
                 placeholder="8"
@@ -145,11 +157,11 @@ const AvailabilityPanel = () => {
               borderRadius="xl"
               h="45px"
               bg="white"
-              name="hourTo"
+              name="HOUR_TO"
               min={9}
               max={22}
-              value={state.hourTo}
-              onChange={(value) => handleChange({ name: "hourTo", value })}
+              value={state.HOUR_TO}
+              onChange={(value) => handleChange({ name: "HOUR_TO", value })}
             >
               <NumberInputField
                 placeholder="22"
@@ -170,7 +182,10 @@ const AvailabilityPanel = () => {
               aria-label={iconButton.label}
               colorScheme={iconButton.colorScheme}
               icon={iconButton.icon}
-              onClick={() => void handleClick(iconButton.key)}
+              onClick={() => {
+                void handleClick(iconButton.key);
+                //setStatus(status.color = iconButton.key);
+              }}
               w="50px"
               h="50px"
               borderRadius="xl"

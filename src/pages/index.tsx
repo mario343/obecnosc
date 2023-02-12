@@ -5,14 +5,9 @@ import { getCredentials } from "@/features/login/components/utilities/getCredent
 import { getDatabase } from "@/utilities/notion";
 
 import { LoginForm } from "../features/login/components/LoginForm";
-
 export const usersDatabaseId = "6f6713ff0a044c0485bccaabb03c2349";
-//process.env.NOTION_USERS_DATABASE_ID as string;
-
 export const credentialsDatabaseId = "99724a9083a14e22bc8a4986d9351e6a";
-// const dupa = process.env.;
-// NOTION_USERS_DATABASE_ID as string;
-//export const mondayScheduleDatabaseId = process.env.PASSWORD_DATABASE_ID as string;
+export const callendarDatabaseId = "e8c504c3dd8446cd9839a52067fa87bc";
 
 export const getStaticProps = async () => {
   const credentials = await getDatabase(credentialsDatabaseId);
@@ -27,7 +22,6 @@ export const getStaticProps = async () => {
     revalidate: 1, // In seconds
   };
 };
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Home: NextPage<{ credentials: any }> = ({ credentials }) => {
   const { login, password } = getCredentials(credentials);
@@ -59,7 +53,7 @@ const Home: NextPage<{ credentials: any }> = ({ credentials }) => {
       </Flex>
 
       <Flex px={4} py={4} pb={[100, 100, 250, 200, 150, 250]}>
-        <LoginForm credentials={{ password, login }} />
+        <LoginForm credentials={{ login, password }} />
       </Flex>
     </Stack>
   );

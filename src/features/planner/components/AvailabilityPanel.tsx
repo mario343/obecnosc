@@ -6,6 +6,7 @@ import {
   NumberInput,
   NumberInputField,
   Text,
+  Tooltip,
 } from "@chakra-ui/react";
 import { request } from "http";
 import { useAtom } from "jotai";
@@ -47,10 +48,7 @@ const AvailabilityPanel = () => {
     HOUR_FROM: 8,
     HOUR_TO: 22,
   });
-  const [status, setStatus] = useState({
-    name: "",
-    color: "",
-  });
+
   const dateOptions = {
     timeZone: "Europe/Zurich",
     month: "numeric",
@@ -58,7 +56,7 @@ const AvailabilityPanel = () => {
     year: "numeric",
   };
 
-  const dateFormatter = new Intl.DateTimeFormat("en-US", dateOptions);
+  const dateFormatter = new Intl.DateTimeFormat("pl-PL", dateOptions);
   const dateAsFormattedString = dateFormatter.format(new Date(selectedDay));
   const isoDate = dateAsFormattedString;
   //const changeToISODate = new Date(dateAsFormattedString);
@@ -70,49 +68,50 @@ const AvailabilityPanel = () => {
       [name]: Number(value),
     });
   }
-  const handleClick = async (name: string) => {
-    //  if (state.HOUR_FROM < state.HOUR_TO) {
-    const res = await fetch("http://localhost:3000/api/makecallendar", {
-      method: "POST",
-      body: JSON.stringify({
-        DAY: isoDate,
-        HOUR_FROM: state.HOUR_FROM.toString(),
-        HOUR_TO: state.HOUR_TO.toString(),
+  const handleClick = async (availability: string, color: string) => {
+    if (state.HOUR_FROM < state.HOUR_TO) {
+      const res = await fetch("http://localhost:3000/api/makecallendar", {
+        method: "POST",
+        body: JSON.stringify({
+          DAY: isoDate,
+          HOUR_FROM: state.HOUR_FROM.toString(),
+          HOUR_TO: state.HOUR_TO.toString(),
 
-        AVAILABILITY: {
-          name: status,
-          color: "red",
+          AVAILABILITY: {
+            name: availability,
+            color: color,
+          },
+
+          USER: loginState?.name,
+          //AVAILABILITY: "AVAILABLE",
+          // HOUR_FROM: state.HOUR_FROM,
+          // HOUR_TO: state.HOUR_TO,
+
+          // loginState,
+          // state: {
+          //   HOUR_FROM: state.HOUR_FROM,
+          //   HOUR_TO: state.HOUR_TO,
+          // },
+        }),
+        headers: {
+          "Content-Type": "application/json",
         },
-        USER: loginState?.name,
-        //AVAILABILITY: "AVAILABLE",
-        // HOUR_FROM: state.HOUR_FROM,
-        // HOUR_TO: state.HOUR_TO,
+      });
 
-        // loginState,
-        // state: {
-        //   HOUR_FROM: state.HOUR_FROM,
-        //   HOUR_TO: state.HOUR_TO,
-        // },
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+      // const data = await response.json();
+      // this.setState({ postId: data.id });
 
-    // const data = await response.json();
-    // this.setState({ postId: data.id });
-
-    // console.log(
-    //   `${state.HOUR_FROM}:00 - ${
-    //     state.HOUR_TO
-    //   }:00 ${selectedDay.toLocaleString()} - ${name.toUpperCase()} - ${
-    //     loginState.name ?? "niewiadomo"
-    //   }`
-    //);
-    console.log(res);
-    // } else {
-    //   throw new Error("hourFrom > hourTo");
-    // }
+      // console.log(
+      //   `${state.HOUR_FROM}:00 - ${
+      //     state.HOUR_TO
+      //   }:00 ${selectedDay.toLocaleString()} - ${name.toUpperCase()} - ${
+      //     loginState.name ?? "niewiadomo"
+      //   }`
+      //);
+      //console.log(res);
+    } else {
+      throw new Error("HOUR_FROM > HOUR_TO");
+    }
   };
 
   return (
@@ -177,19 +176,27 @@ const AvailabilityPanel = () => {
         </Flex>
         <HStack gap={4}>
           {iconButtons.map((iconButton) => (
-            <IconButton
+            <Tooltip
               key={iconButton.key}
-              aria-label={iconButton.label}
-              colorScheme={iconButton.colorScheme}
-              icon={iconButton.icon}
-              onClick={() => {
-                void handleClick(iconButton.key);
-                //setStatus(status.color = iconButton.key);
-              }}
-              w="50px"
-              h="50px"
-              borderRadius="xl"
-            />
+              label={iconButton.key}
+              bg="white"
+              color="black"
+              placement="top"
+              openDelay={500}
+            >
+              <IconButton
+                key={iconButton.key}
+                aria-label={iconButton.label}
+                colorScheme={iconButton.colorScheme}
+                icon={iconButton.icon}
+                onClick={() => {
+                  void handleClick(iconButton.key, iconButton.colorScheme);
+                }}
+                w="50px"
+                h="50px"
+                borderRadius="xl"
+              />
+            </Tooltip>
           ))}
         </HStack>
       </HStack>

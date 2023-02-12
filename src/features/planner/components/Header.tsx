@@ -25,7 +25,7 @@ const Header = () => {
       justify="space-between"
       borderBottomWidth={1}
     >
-      <Flex w={[335]}>
+      <Flex>
         <Button variant="white" w="200px">
           MÓJ PLAN
         </Button>
@@ -35,7 +35,7 @@ const Header = () => {
         </Button>
       </Flex>
 
-      <Flex w={[175]}>
+      <Flex>
         <Tooltip
           label={loginState?.name}
           bg="white"

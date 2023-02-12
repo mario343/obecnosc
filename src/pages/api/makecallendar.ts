@@ -17,10 +17,10 @@ const createEventHandler = async (
     return response.status(400).json({ error: "Don't!" });
   }
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const database = await notion.databases.retrieve({
       database_id: callendarDatabaseId,
     });
-
     await notion.pages.create({
       parent: {
         database_id: callendarDatabaseId,
@@ -58,7 +58,6 @@ const createEventHandler = async (
         },
 
         AVAILABILITY: {
-          type: "select",
           select: {
             name: request.body.AVAILABILITY.name,
             color: request.body.AVAILABILITY.color,

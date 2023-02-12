@@ -1,10 +1,8 @@
 import { Button, Flex } from "@chakra-ui/react";
 import { addDays, startOfWeek } from "date-fns";
 import type { NextPage } from "next";
+import Head from "next/head";
 import { useReducer } from "react";
-
-import { callendarDatabaseId, credentialsDatabaseId } from "@/pages";
-import { getDatabase } from "@/utilities/notion";
 
 import { AvailabilityPanel } from "../components/AvailabilityPanel";
 import { BottomSection } from "../components/Footer";
@@ -51,19 +49,25 @@ const PlannerView: NextPage<{ credentials: any }> = ({ credentials }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { callendar } = getCredentials(credentials);
   return (
-    <Flex h="100vh" direction="column" align="center" px={150}>
-      <Header />
-      <Button
-        onClick={() => {
-          console.log(callendar);
-        }}
-      >
-        INFO
-      </Button>
-      <AvailabilityPanel />
-      <WeekView selectedWeek={state} />
-      <BottomSection selectedWeek={state} dispatch={dispatch} />
-    </Flex>
+    <>
+      <Head>
+        <title>Obecność - planner </title>
+        <meta name="description" content="Callendar app" />
+      </Head>
+      <Flex h="100vh" direction="column" align="center" px={150}>
+        <Header />
+        <Button
+          onClick={() => {
+            console.log(callendar);
+          }}
+        >
+          INFO
+        </Button>
+        <AvailabilityPanel />
+        <WeekView selectedWeek={state} />
+        <BottomSection selectedWeek={state} dispatch={dispatch} />
+      </Flex>
+    </>
   );
 };
 

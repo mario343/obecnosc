@@ -46,8 +46,8 @@ function reducer(state: Date[], action: { type: Action }) {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
 const PlannerView: NextPage<{ credentials: any }> = ({ credentials }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
   const { callendar } = getCredentials(credentials);
+  const [state, dispatch] = useReducer(reducer, initialState);
   return (
     <>
       <Head>

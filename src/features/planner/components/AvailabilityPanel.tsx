@@ -115,7 +115,7 @@ const AvailabilityPanel = () => {
   };
 
   return (
-    <Flex color="white" w="100%" direction="column">
+    <Flex color="white" w="100%" direction="column" alignItems="center">
       <HStack gap={20} align="center" h="100px" pl={10}>
         <Text fontSize="xl">Dyspozycyjność</Text>
         <Flex align="center" justify="space-between" w="450px">

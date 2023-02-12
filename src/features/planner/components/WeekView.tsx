@@ -1,6 +1,14 @@
 // somehow date-fns imports are considered the same
 /* eslint-disable import/no-duplicates */
-import { Box, Flex, HStack, SimpleGrid, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  HStack,
+  Image,
+  SimpleGrid,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { format, isSameDay } from "date-fns";
 import { pl } from "date-fns/locale";
 import { useAtom } from "jotai";
@@ -16,6 +24,30 @@ const DayItem = ({ day }: { day: Date }) => {
   const [selectedDay, setSelectedDay] = useAtom(selectedDayAtom);
   const hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
   const hourHeight = (DAY_ITEM_HEIGHT - 1) / hours.length;
+  let backgroundImage = "";
+  switch (format(day, "EEE")) {
+    case "Mon":
+      backgroundImage = "/monday.png";
+      break;
+    case "Tue":
+      backgroundImage = "/tuesday.png";
+      break;
+    case "Wed":
+      backgroundImage = "/wednesday.png";
+      break;
+    case "Thu":
+      backgroundImage = "/thursday.png";
+      break;
+    case "Fri":
+      backgroundImage = "/friday.png";
+      break;
+    case "Sat":
+      backgroundImage = "/saturday.png";
+      break;
+    default:
+      backgroundImage = "/monday.png";
+      break;
+  }
 
   return (
     <VStack w="100%" mx={20} px={1}>
@@ -25,17 +57,26 @@ const DayItem = ({ day }: { day: Date }) => {
       </Flex>
       <Box
         as="button"
-        bg={isSameDay(day, selectedDay) ? "#b5b5b5" : "gray"}
-        height={DAY_ITEM_HEIGHT}
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        backgroundImage={`url('${backgroundImage}')`}
+        // bg={
+        //   isSameDay(day, selectedDay) ? (
+        //     <Image src="./images/tuesday.png" alt="day" />
+        //   ) : (
+        //     <Image src="./images/tuesday.png" alt="day" />
+        //   )
+        // }
+        height="50px"
+        //{DAY_ITEM_HEIGHT}
         w="100%"
         borderRadius={8}
         borderWidth={isSameDay(day, selectedDay) ? 5 : 0}
         borderColor={isSameDay(day, selectedDay) ? "yellow.300" : "gray.300"}
         position="relative"
-        _hover={{ shadow: "2xl", bg: "#b5b5b5" }}
+        _hover={{ shadow: "3xl", opacity: 0.7 }}
         onClick={() => setSelectedDay(day)}
       >
-        {hours.map((hour, index) => (
+        {/* {hours.map((hour, index) => (
           <Box
             width="100%"
             //     bg="red"
@@ -47,22 +88,31 @@ const DayItem = ({ day }: { day: Date }) => {
             position="absolute"
             top={index * hourHeight}
           >
-            <Text key={hour}>{hour}:00</Text>
-          </Box>
-        ))}
+            {/* <Text key={hour}>{hour}:00</Text> */}
+        {/* </Box>
+        ))} */}
       </Box>
     </VStack>
   );
 };
 
+const DUPA = () => {
+  return (
+    <Flex h="500px" w="90%">
+      eeeee
+    </Flex>
+  );
+};
+
 export const WeekView = ({ selectedWeek }: WeekViewProps) => {
   return (
-    <HStack gap={1} w="100%">
-      <SimpleGrid columns={6} w="90%" gap={2}>
+    <VStack gap={1} w="100%">
+      <SimpleGrid columns={6} w="90%" gap={2} alignSelf="flex-start">
         {selectedWeek.map((day) => (
           <DayItem day={day} key={day.getTime()} />
         ))}
       </SimpleGrid>
-    </HStack>
+      <DUPA />
+    </VStack>
   );
 };

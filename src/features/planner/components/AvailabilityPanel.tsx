@@ -10,7 +10,6 @@ import {
 } from "@chakra-ui/react";
 import { request } from "http";
 import { useAtom } from "jotai";
-import { responseSymbol } from "next/dist/server/web/spec-compliant/fetch-event";
 import { useState } from "react";
 
 import { loginAtom } from "@/features/login/atoms/login";

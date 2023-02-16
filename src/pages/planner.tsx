@@ -1,6 +1,6 @@
+import { PlannerView } from "@/features/planner";
 import { getDatabase } from "@/utilities/notion";
 
-import { PlannerView } from "../features/planner/index";
 import { callendarDatabaseId } from ".";
 
 export const getStaticProps = async () => {
@@ -8,7 +8,7 @@ export const getStaticProps = async () => {
   return {
     props: {
       credentials,
-      protected: true,
+      // protected: true,
       userMustBeSelected: true,
     }, // Next.js will attempt to re-generate the page:
     // - When a request comes in

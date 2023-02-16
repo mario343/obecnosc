@@ -4,6 +4,9 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useReducer } from "react";
 
+import { callendarDatabaseId } from "@/pages";
+import { getDatabase } from "@/utilities/notion";
+
 import { AvailabilityPanel } from "../components/AvailabilityPanel";
 import { BottomSection } from "../components/Footer";
 import { Header } from "../components/Header";
@@ -21,11 +24,12 @@ const getCurrentWorkWeek = () => {
 };
 
 const initialState = getCurrentWorkWeek();
-
+const today = new Date();
 export enum Action {
   "NEXT_WEEK" = "NEXT_WEEK",
   "PREVIOUS_WEEK" = "PREVIOUS_WEEK",
   "CURRENT_WEEK" = "CURRENT_WEEK",
+  "TODAY" = "TODAY",
 }
 
 function reducer(state: Date[], action: { type: Action }) {
@@ -36,7 +40,6 @@ function reducer(state: Date[], action: { type: Action }) {
       return state.map((day) => addDays(day, 7));
     case Action.CURRENT_WEEK:
       return initialState;
-
     default:
       throw new Error();
   }
@@ -51,19 +54,24 @@ const PlannerView: NextPage<{ credentials: any }> = ({ credentials }) => {
         <title>Obecność - planner </title>
         <meta name="description" content="Callendar app" />
       </Head>
-      <Flex h="100vh" direction="column" align="center" px={150}>
+      <Flex
+        h="100vh"
+        direction="column"
+        align="center"
+        suppressHydrationWarning
+      >
         <Header />
-        <Button
+        {/* <Button
           onClick={() => {
             console.log(callendar);
           }}
         >
           INFO
-        </Button>
+        </Button> */}
+
         <AvailabilityPanel />
         <WeekView selectedWeek={state} />
         <Flex h="500px" w="90%" pt="30px">
-          {/* <Refresh credentials={credentials} /> */}
           <table>
             <thead>
               <tr>

@@ -21,7 +21,6 @@ const Button: ComponentStyleConfig = {
     fontWeight: "700",
     fontSize: "14px",
   },
-
   variants: {
     white: {
       color: "black",

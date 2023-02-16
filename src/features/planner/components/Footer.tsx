@@ -21,13 +21,13 @@ const BottomSection = ({ selectedWeek, dispatch }: BottomSectionProps) => {
       justify="space-between"
       mt={9}
       align="center"
-      w={["50%", "80%", "100%"]}
+      w={["50%", "80%", "90%"]}
     >
       <Button
         variant="black"
         onClick={() => dispatch({ type: Action.CURRENT_WEEK })}
       >
-        DZISIAJ
+        Ten tydzień
       </Button>
       <Flex w={[200, 250, 350]} justify="space-between" align="center">
         <Button

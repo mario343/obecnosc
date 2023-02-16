@@ -98,7 +98,7 @@ const AvailabilityPanel = () => {
         },
       });
 
-      // const data = await response.json();
+      // const data = await res.json();
       // this.setState({ postId: data.id });
 
       // console.log(

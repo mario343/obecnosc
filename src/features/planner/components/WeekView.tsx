@@ -1,29 +1,25 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 // somehow date-fns imports are considered the same
 /* eslint-disable import/no-duplicates */
-import {
-  Box,
-  Flex,
-  HStack,
-  Image,
-  SimpleGrid,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Flex, SimpleGrid, Text, VStack } from "@chakra-ui/react";
 import { format, isSameDay } from "date-fns";
 import { pl } from "date-fns/locale";
 import { useAtom } from "jotai";
 
 import { selectedDayAtom } from "../atoms/selectedDay";
 
-const DAY_ITEM_HEIGHT = 600;
+//const DAY_ITEM_HEIGHT = 600;
 interface WeekViewProps {
   selectedWeek: Date[];
 }
 
 const DayItem = ({ day }: { day: Date }) => {
   const [selectedDay, setSelectedDay] = useAtom(selectedDayAtom);
-  const hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
-  const hourHeight = (DAY_ITEM_HEIGHT - 1) / hours.length;
+  //const hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
+  //const hourHeight = (DAY_ITEM_HEIGHT - 1) / hours.length;
   let backgroundImage = "";
   switch (format(day, "EEE")) {
     case "Mon":
@@ -95,24 +91,17 @@ const DayItem = ({ day }: { day: Date }) => {
     </VStack>
   );
 };
-
-const DUPA = () => {
-  return (
-    <Flex h="500px" w="90%">
-      eeeee
-    </Flex>
-  );
-};
-
+//: NextPage<{ callendar: any }> = ({ callendar })
+//({ selectedWeek }: WeekViewProps)
 export const WeekView = ({ selectedWeek }: WeekViewProps) => {
+  //const { callendar } = getCredentials(callendarDatabaseId);
   return (
     <VStack gap={1} w="100%">
       <SimpleGrid columns={6} w="90%" gap={2} alignSelf="flex-start">
-        {selectedWeek.map((day) => (
+        {selectedWeek.map((day: Date) => (
           <DayItem day={day} key={day.getTime()} />
         ))}
       </SimpleGrid>
-      <DUPA />
     </VStack>
   );
 };

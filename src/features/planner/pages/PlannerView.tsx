@@ -42,9 +42,6 @@ function reducer(state: Date[], action: { type: Action }) {
   }
 }
 
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-
 const PlannerView: NextPage<{ credentials: any }> = ({ credentials }) => {
   const { callendar } = getCredentials(credentials);
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -65,6 +62,31 @@ const PlannerView: NextPage<{ credentials: any }> = ({ credentials }) => {
         </Button>
         <AvailabilityPanel />
         <WeekView selectedWeek={state} />
+        <Flex h="500px" w="90%" pt="30px">
+          {/* <Refresh credentials={credentials} /> */}
+          <table>
+            <thead>
+              <tr>
+                <th>Availability</th>
+                <th>Day</th>
+                <th>Hour From</th>
+                <th>Hour To</th>
+                <th>User</th>
+              </tr>
+            </thead>
+            <tbody>
+              {callendar.map((row, index) => (
+                <tr key={index}>
+                  <td>{row.AVAILABILITY}</td>
+                  <td>{row.DAY}</td>
+                  <td>{row.HOUR_FROM}</td>
+                  <td>{row.HOUR_TO}</td>
+                  <td>{row.USER}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </Flex>
         <BottomSection selectedWeek={state} dispatch={dispatch} />
       </Flex>
     </>

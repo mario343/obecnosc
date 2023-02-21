@@ -127,8 +127,8 @@ const PlannerView: NextPage<{ credentials: any }> = ({ credentials }) => {
                       <Tr>
                         <Th>Dostępność</Th>
                         <Th>Dzień</Th>
-                        <Th>Godzina od</Th>
-                        <Th>Godzina do</Th>
+                        <Th>Od</Th>
+                        <Th>Do</Th>
                         <Th>Użytkownik</Th>
                       </Tr>
                     </Thead>
@@ -184,15 +184,15 @@ const PlannerView: NextPage<{ credentials: any }> = ({ credentials }) => {
                 <CardBody>
                   <Heading fontSize="26px">
                     <Highlight
-                      query="Najlepszy czas na spotkanie w ciągu kolejnych 7 dni"
+                      query="Najlepszy czas na spotkanie w ciągu kolejnych 5 dni"
                       styles={{
-                        px: "4",
+                        px: "2",
                         py: "1",
                         bg: "#feebc8",
                         color: "#a84a2d",
                       }}
                     >
-                      Najlepszy czas na spotkanie w ciągu kolejnych 7 dni
+                      Najlepszy czas na spotkanie w ciągu kolejnych 5 dni
                     </Highlight>
                   </Heading>
                   <Table

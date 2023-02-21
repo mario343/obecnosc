@@ -19,7 +19,8 @@ const BottomSection = ({ selectedWeek, dispatch }: BottomSectionProps) => {
   return (
     <Flex
       justify="space-between"
-      mt={9}
+      //bg="red"
+      mt="30px"
       align="center"
       w={["50%", "80%", "90%"]}
     >

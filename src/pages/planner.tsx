@@ -8,9 +8,11 @@ export const getStaticProps = async () => {
   return {
     props: {
       credentials,
-      // protected: true,
+      protected: true,
       userMustBeSelected: true,
-    }, // Next.js will attempt to re-generate the page:
+      // authenticated: true,
+    },
+    // Next.js will attempt to re-generate the page:
     // - When a request comes in
     // - At most once every second
     revalidate: 1, // In seconds

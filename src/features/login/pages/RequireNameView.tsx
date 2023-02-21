@@ -1,4 +1,4 @@
-import { Button, Center, Flex, Text } from "@chakra-ui/react";
+import { Button, Center, Flex, Text, VStack } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
 const RequireNameView = () => {
@@ -9,7 +9,7 @@ const RequireNameView = () => {
 
   return (
     <Flex h="100vh" direction="column" align="center" justify="center">
-      <Flex w="100%" alignSelf="center" align="center" justify="center">
+      <VStack w="100%" alignSelf="center" align="center" justify="center">
         <Text
           fontWeight="850"
           fontSize={[30, 50]}
@@ -18,11 +18,11 @@ const RequireNameView = () => {
           align="center"
         >
           Nie masz dostępu do tej strony!
-          <Center mt={45} fontSize={[20, 30]} letterSpacing={[3, 5]} px={5}>
-            Aby przejść dalej musisz wybrać użytkownika
-          </Center>
         </Text>
-      </Flex>
+        <Center mt={45} fontSize={[20, 30]} letterSpacing={[3, 5]} px={5}>
+          Aby przejść dalej musisz wybrać użytkownika
+        </Center>
+      </VStack>
 
       <Flex px={25} py={25}>
         <Flex>

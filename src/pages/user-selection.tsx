@@ -14,7 +14,7 @@ export const getStaticProps = async () => {
   return {
     props: {
       users: usersDatabase,
-      // protected: true,
+      protected: true,
     },
     // Next.js will attempt to re-generate the page:
     // - When a request comes in

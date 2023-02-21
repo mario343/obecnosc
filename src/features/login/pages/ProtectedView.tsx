@@ -1,4 +1,4 @@
-import { Button, Center, Flex, Text } from "@chakra-ui/react";
+import { Button, Center, Flex, Text, VStack } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
 const ProtectedView = () => {
@@ -9,7 +9,7 @@ const ProtectedView = () => {
 
   return (
     <Flex h="100vh" direction="column" align="center" justify="center">
-      <Flex
+      <VStack
         w="100%"
         alignSelf="center"
         align="center"
@@ -24,16 +24,16 @@ const ProtectedView = () => {
           align="center"
         >
           Nie masz dostępu do tej strony!
-          <Center
-            mt={45}
-            fontSize={[20, 25, 30]}
-            letterSpacing={[3, 3, 5]}
-            px={5}
-          >
-            Zaloguj się klikając poniższy przycisk
-          </Center>
         </Text>
-      </Flex>
+        <Center
+          mt={45}
+          fontSize={[20, 25, 30]}
+          letterSpacing={[3, 3, 5]}
+          px={5}
+        >
+          Zaloguj się klikając poniższy przycisk
+        </Center>
+      </VStack>
 
       <Flex px={25} py={25} maxW={[350, 1000, "full"]}>
         <Text fontSize={50} mr="25px">
@@ -65,4 +65,4 @@ const ProtectedView = () => {
   );
 };
 
-export default ProtectedView;
+export { ProtectedView };

@@ -1,15 +1,15 @@
 import { useAtom } from "jotai";
 import type { AppProps } from "next/app";
-import { useRouter } from "next/router";
 
+//import { useRouter } from "next/router";
 import { loginAtom } from "@/features/login/atoms/login";
-import ProtectedView from "@/features/login/pages/ProtectedView";
+import { ProtectedView } from "@/features/login/pages/ProtectedView";
 import RequireNameView from "@/features/login/pages/RequireNameView";
 import { ChakraProvider } from "@/providers/theme/chakra";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [loginState] = useAtom(loginAtom);
-  const router = useRouter();
+  //const router = useRouter();
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   if (pageProps.protected && !loginState.authenticated) {
@@ -29,9 +29,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     );
   }
 
-  if (loginState.authenticated && router.pathname === "/") {
-    void router.replace("/planner");
-  }
+  // if (loginState.authenticated && router.pathname === "/") {
+  //   void router.replace("/planner");
+  // }
 
   return (
     <ChakraProvider>

@@ -14,7 +14,7 @@ export const getStaticProps = async () => {
   return {
     props: {
       users: usersDatabase,
-      protected: true,
+      // protected: true,
     },
     // Next.js will attempt to re-generate the page:
     // - When a request comes in
@@ -30,9 +30,9 @@ const UserSelection: NextPage<{ users: User[] }> = ({ users }) => {
         <title>Obecność - user </title>
         <meta name="description" content="Callendar app" />
       </Head>
-      <VStack h="100vh" align="center" justify="center" spacing="100px">
-        <VStack w="90%" alignSelf="center">
-          <Divider color="#e2265c" border="5px" borderRadius="full" />
+      <VStack h="100vh" align="center" justify="center" spacing="200px">
+        <VStack w="90%">
+          <Divider color="#e2265c" borderRadius="full" border="3px solid" />
           <Text fontSize="60px">KIM JESTEŚ?</Text>
         </VStack>
         <Flex w="100%" justify="center" align="center" flexWrap="wrap">

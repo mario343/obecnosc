@@ -2,5 +2,7 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/planner": "pages/planner.js"
+  "/planner": "pages/planner.js",
+  "/api/makecallendar": "pages/api/makecallendar.js",
+  "/user-selection": "pages/user-selection.js"
 }

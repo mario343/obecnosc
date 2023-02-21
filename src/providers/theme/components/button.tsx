@@ -1,14 +1,4 @@
-import { switchAnatomy as parts } from "@chakra-ui/anatomy";
-import { ChakraProvider as Provider, extendTheme } from "@chakra-ui/react";
 import type { ComponentStyleConfig } from "@chakra-ui/theme";
-import type {
-  PartsStyleFunction,
-  PartsStyleObject,
-  SystemStyleFunction,
-  SystemStyleObject,
-} from "@chakra-ui/theme-tools";
-import { calc, cssVar, mode } from "@chakra-ui/theme-tools";
-import { NodeNextRequest } from "next/dist/server/base-http/node";
 
 const Button: ComponentStyleConfig = {
   // The styles all button have in common
@@ -25,6 +15,12 @@ const Button: ComponentStyleConfig = {
     white: {
       color: "black",
       background: "white",
+      border: "2px",
+      borderColor: "white",
+      _hover: {
+        background: "#2d2e2d",
+        color: "white",
+      },
     },
     black: {
       color: "white",
@@ -34,10 +30,11 @@ const Button: ComponentStyleConfig = {
       _active: {
         color: "#2d2e2d",
         backgroundColor: "white",
+        border: "3px",
       },
       _hover: {
-        background: "#2d2e2d",
-        color: "white",
+        background: "white",
+        color: "#2d2e2d",
       },
       borderColor: "white",
     },

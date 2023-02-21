@@ -7,8 +7,8 @@ import {
   NumberInputField,
   Text,
   Tooltip,
+  useToast,
 } from "@chakra-ui/react";
-import { request } from "http";
 import { useAtom } from "jotai";
 import { useState } from "react";
 
@@ -50,9 +50,9 @@ const AvailabilityPanel = () => {
 
   const dateOptions = {
     timeZone: "Europe/Zurich",
-    month: "numeric",
-    day: "numeric",
-    year: "numeric",
+    month: "numeric" as const,
+    day: "numeric" as const,
+    year: "numeric" as const,
   };
 
   const dateFormatter = new Intl.DateTimeFormat("pl-PL", dateOptions);
@@ -67,8 +67,10 @@ const AvailabilityPanel = () => {
       [name]: Number(value),
     });
   }
+  const toast = useToast();
   const handleClick = async (availability: string, color: string) => {
     if (state.HOUR_FROM < state.HOUR_TO) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const res = await fetch("http://localhost:3000/api/makecallendar", {
         method: "POST",
         body: JSON.stringify({
@@ -82,34 +84,44 @@ const AvailabilityPanel = () => {
           },
 
           USER: loginState?.name,
-          //AVAILABILITY: "AVAILABLE",
-          // HOUR_FROM: state.HOUR_FROM,
-          // HOUR_TO: state.HOUR_TO,
-
-          // loginState,
-          // state: {
-          //   HOUR_FROM: state.HOUR_FROM,
-          //   HOUR_TO: state.HOUR_TO,
-          // },
         }),
         headers: {
           "Content-Type": "application/json",
         },
       });
 
-      // const data = await res.json();
-      // this.setState({ postId: data.id });
-
-      // console.log(
-      //   `${state.HOUR_FROM}:00 - ${
-      //     state.HOUR_TO
-      //   }:00 ${selectedDay.toLocaleString()} - ${name.toUpperCase()} - ${
-      //     loginState.name ?? "niewiadomo"
-      //   }`
-      //);
-      //console.log(res);
+      let availabilityState;
+      switch (availability) {
+        case "AVAILABLE":
+          availabilityState = "jesteś dostępny";
+          break;
+        case "MAYBE":
+          availabilityState = "może będziesz dostępny";
+          break;
+        case "UNAVAILABLE":
+          availabilityState = "nie będziesz dostępny";
+          break;
+        default:
+          availabilityState = "nieznany status dostępności";
+      }
+      toast({
+        title: "Udało się wysłać zapytanie",
+        description: `Zadeklarowałeś, że ${availabilityState} w dniu ${isoDate}, między ${state.HOUR_FROM.toString()} a ${state.HOUR_TO.toString()}.`,
+        status: "success",
+        position: "bottom-right",
+        duration: 5000,
+        isClosable: true,
+      });
     } else {
-      throw new Error("HOUR_FROM > HOUR_TO");
+      toast({
+        title: "Nie udało się wysłać zapytania",
+        description: "Wprowadziłeś złe dane! Spróbuj ponownie.",
+        status: "error",
+        position: "bottom-right",
+        duration: 5000,
+        isClosable: true,
+      });
+      // throw new Error("HOUR_FROM > HOUR_TO");
     }
   };
 

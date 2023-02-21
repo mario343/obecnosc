@@ -1,11 +1,26 @@
-import { Button, Flex } from "@chakra-ui/react";
+import {
+  Button,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  Flex,
+  Table,
+  Tag,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { addDays, startOfWeek } from "date-fns";
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useReducer } from "react";
-
-import { callendarDatabaseId } from "@/pages";
-import { getDatabase } from "@/utilities/notion";
+import React, { useReducer } from "react";
 
 import { AvailabilityPanel } from "../components/AvailabilityPanel";
 import { BottomSection } from "../components/Footer";
@@ -23,8 +38,14 @@ const getCurrentWorkWeek = () => {
   return days;
 };
 
+interface AvailabilityColors {
+  AVAILABLE: string;
+  MAYBE: string;
+  UNAVAILABLE: string;
+  [key: string]: string; // add index signature
+}
+
 const initialState = getCurrentWorkWeek();
-const today = new Date();
 export enum Action {
   "NEXT_WEEK" = "NEXT_WEEK",
   "PREVIOUS_WEEK" = "PREVIOUS_WEEK",
@@ -45,9 +66,18 @@ function reducer(state: Date[], action: { type: Action }) {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const PlannerView: NextPage<{ credentials: any }> = ({ credentials }) => {
+  const availabilityColors: AvailabilityColors = {
+    AVAILABLE: "green",
+    MAYBE: "yellow",
+    UNAVAILABLE: "red",
+  };
   const { callendar } = getCredentials(credentials);
   const [state, dispatch] = useReducer(reducer, initialState);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  // eslint-disable-next-line import/no-named-as-default-member
+  //const btnRef = React.useRef();
   return (
     <>
       <Head>
@@ -71,29 +101,76 @@ const PlannerView: NextPage<{ credentials: any }> = ({ credentials }) => {
 
         <AvailabilityPanel />
         <WeekView selectedWeek={state} />
-        <Flex h="500px" w="90%" pt="30px">
-          <table>
-            <thead>
-              <tr>
-                <th>Availability</th>
-                <th>Day</th>
-                <th>Hour From</th>
-                <th>Hour To</th>
-                <th>User</th>
-              </tr>
-            </thead>
-            <tbody>
-              {callendar.map((row, index) => (
-                <tr key={index}>
-                  <td>{row.AVAILABILITY}</td>
-                  <td>{row.DAY}</td>
-                  <td>{row.HOUR_FROM}</td>
-                  <td>{row.HOUR_TO}</td>
-                  <td>{row.USER}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <Flex h="500px" pt="30px" w="90%" align="center">
+          <Button
+            //ref={btnRef}
+            variant="white"
+            onClick={onOpen}
+            w="300px"
+          >
+            Pokaż wszystkie aktywności
+          </Button>
+          <Drawer
+            isOpen={isOpen}
+            placement="right"
+            onClose={onClose}
+            // finalFocusRef={btnRef}
+            size="md"
+          >
+            <DrawerOverlay />
+            <DrawerContent>
+              <DrawerCloseButton color="black" />
+              <DrawerHeader color="black">Lista aktywności</DrawerHeader>
+
+              <DrawerBody color="black">
+                <Table
+                  variant="simple"
+                  size="sm"
+                  colorScheme="gray"
+                  // striped="true"
+                >
+                  <Thead>
+                    <Tr>
+                      <Th>Availability</Th>
+                      <Th>Day</Th>
+                      <Th>Hour From</Th>
+                      <Th>Hour To</Th>
+                      <Th>User</Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    {callendar
+                      .sort(
+                        (a, b) =>
+                          new Date(
+                            b.DAY.split(".").reverse().join("-")
+                          ).getTime() -
+                          new Date(
+                            a.DAY.split(".").reverse().join("-")
+                          ).getTime()
+                      )
+                      .map((row, index) => (
+                        <Tr key={index}>
+                          <Td>
+                            <Tag
+                              colorScheme={availabilityColors[row.AVAILABILITY]}
+                            >
+                              {row.AVAILABILITY}
+                            </Tag>
+                          </Td>
+                          <Td>{row.DAY}</Td>
+                          <Td>{row.HOUR_FROM}</Td>
+                          <Td>{row.HOUR_TO}</Td>
+                          <Td>{row.USER}</Td>
+                        </Tr>
+                      ))}
+                  </Tbody>
+                </Table>
+              </DrawerBody>
+
+              <DrawerFooter></DrawerFooter>
+            </DrawerContent>
+          </Drawer>
         </Flex>
         <BottomSection selectedWeek={state} dispatch={dispatch} />
       </Flex>

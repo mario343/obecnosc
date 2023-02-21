@@ -4,7 +4,6 @@ import {
   Avatar,
   Button,
   Flex,
-  HStack,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -38,9 +37,8 @@ const Info = () => {
           <p> c) Niedostępny </p>
           <p> oraz wybierz dzień</p>
           <p>
-            {" "}
             Następnie poczekaj, aż program wyliczy kiedy jest najlepsza pora na
-            spotkanie!{" "}
+            spotkanie!
           </p>
         </PopoverBody>
       </PopoverContent>

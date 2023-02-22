@@ -78,6 +78,7 @@ const PlannerView: NextPage<{ credentials: any }> = ({ credentials }) => {
     MAYBE: "yellow",
     UNAVAILABLE: "red",
   };
+
   const { callendar } = getCredentials(credentials);
   const [state, dispatch] = useReducer(reducer, initialState);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -301,6 +302,44 @@ const PlannerView: NextPage<{ credentials: any }> = ({ credentials }) => {
                               []
                             );
 
+                          // const hourAvailability: Record<number, string[]> = {};
+                          // availabilityObj.AVAILABLE.forEach((hours) => {
+                          //   const [from, to] = hours.split("-");
+                          //   for (
+                          //     let i = parseInt(from);
+                          //     i < parseInt(to);
+                          //     i++
+                          //   ) {
+                          //     if (!hourAvailability[i]) {
+                          //       hourAvailability[i] = [];
+                          //     }
+                          //     hourAvailability[i].push(hours);
+                          //   }
+                          // });
+
+                          // // generate the meetingHours variable based on the hourAvailability mapping
+                          // const meetingHours = Object.keys(hourAvailability)
+                          //   .filter((hour) => {
+                          //     const users = hourAvailability[parseInt(hour)];
+                          //     return users.every((user) => {
+                          //       const [from, to] = user.split("-");
+                          //       for (
+                          //         let i = parseInt(from);
+                          //         i < parseInt(to);
+                          //         i++
+                          //       ) {
+                          //         if (!availableHours.includes(i)) {
+                          //           return false;
+                          //         }
+                          //       }
+                          //       return true;
+                          //     });
+                          //   })
+                          //   .sort()
+                          //   .map(
+                          //     (hour) => `${hour}:00-${parseInt(hour) + 1}:00`
+                          //   );
+
                           const meetingHours = availableHours
                             .filter(
                               (hour: number) =>
@@ -308,7 +347,13 @@ const PlannerView: NextPage<{ credentials: any }> = ({ credentials }) => {
                                 !unavailableHours.includes(hour)
                             )
                             .sort()
-                            .map((hour: number) => `${hour}:00-${hour + 1}:00`);
+                            .reduce((acc: string[], hour: number) => {
+                              const hourString = `${hour}:00-${hour + 1}:00`;
+                              if (!acc.includes(hourString)) {
+                                acc.push(hourString);
+                              }
+                              return acc;
+                            }, []);
 
                           return (
                             <Tr key={i}>

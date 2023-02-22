@@ -6,12 +6,15 @@ import { getCredentials } from "@/features/login/components/utilities/getCredent
 import { getDatabase } from "@/utilities/notion";
 
 import { LoginForm } from "../features/login/components/LoginForm";
-export const usersDatabaseId = "6f6713ff0a044c0485bccaabb03c2349";
-export const credentialsDatabaseId = "99724a9083a14e22bc8a4986d9351e6a";
-export const callendarDatabaseId = "e8c504c3dd8446cd9839a52067fa87bc";
+
+export const usersDatabaseId = process.env.NOTION_USERS_DATABASE_ID as string;
+export const callendarDatabaseId = process.env
+  .NOTION_CALLENDAR_DATABASE_ID as string;
+export const passwordDatabaseId = process.env
+  .NOTION_PASSWORD_DATABASE_ID as string;
 
 export const getStaticProps = async () => {
-  const credentials = await getDatabase(credentialsDatabaseId);
+  const credentials = await getDatabase(passwordDatabaseId);
 
   return {
     props: {

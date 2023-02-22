@@ -2,7 +2,6 @@ import { PlannerView } from "@/features/planner";
 import { getDatabase } from "@/utilities/notion";
 
 import { callendarDatabaseId } from ".";
-
 export const getStaticProps = async () => {
   const credentials = await getDatabase(callendarDatabaseId);
   return {

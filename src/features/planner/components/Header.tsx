@@ -83,7 +83,7 @@ const Header = () => {
           />
         </Tooltip>
         <Button variant="black" onClick={logout}>
-          WYJDŹ
+          WYLOGUJ
         </Button>
       </Flex>
     </Flex>

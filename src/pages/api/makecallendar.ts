@@ -18,9 +18,7 @@ const createEventHandler = async (
   }
   try {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const database = await notion.databases.retrieve({
-      database_id: callendarDatabaseId,
-    });
+
     await notion.pages.create({
       parent: {
         database_id: callendarDatabaseId,
@@ -83,6 +81,13 @@ const createEventHandler = async (
         },
       },
     });
+
+    const res = await notion.databases.query({
+      database_id: callendarDatabaseId,
+    });
+    const pages = res.results;
+    console.log(pages);
+
     response.status(201).json({ message: "Success" });
   } catch (error) {
     response.status(500).json({ error });
@@ -90,3 +95,5 @@ const createEventHandler = async (
 };
 
 export default createEventHandler;
+
+// // Update your state or view with the new data
